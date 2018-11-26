@@ -54,7 +54,7 @@ namespace AlwaysOnTop
 
         public string skey;
         public Keys kMod, key;
-  
+
 
         string AoTPath = Application.ExecutablePath.ToString();
         string AoTBuild, IP, HK, PW;
@@ -116,7 +116,8 @@ namespace AlwaysOnTop
                 });
                 TrayIcon.Visible = true;
 
-                TrayIcon.Click += TrayIcon_Click;
+                TrayIcon.MouseUp += TrayIcon_Click;
+
 
                 if (DBN != 1)
                 {
@@ -174,10 +175,12 @@ namespace AlwaysOnTop
 
         }
 
-        private void TrayIcon_Click(object sender, EventArgs e) //let left click behave the same as right click
+        private void TrayIcon_Click(object sender, MouseEventArgs e) //let left click behave the same as right click
         {
-            MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
-            mi.Invoke(trayIcon, null);
+            if (e.Button == MouseButtons.Left)
+            {
+                AoT(sender, e);
+            }
         }
 
         void AoT(object sender, EventArgs e)
